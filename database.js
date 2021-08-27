@@ -34,6 +34,11 @@ let Author = [
         name: "khushi",
         books: ["12345ONE"],
       },
+      {
+        id: 3,
+        name: "V",
+        books: [],
+      },
 ];
 let Publication = [
     {
@@ -46,6 +51,7 @@ let Publication = [
         name: "Vickie Publications",
         books: [],
       },
+    
 ];
 
 module.exports = {Book, Author, Publication};
