@@ -46,7 +46,7 @@ Authors
 -GET
     -to get all author
     -to get specific author
-    -to list of author based on a book
+    -to list of author based on a book    ----------do
 
 -POST
     -to add new author
@@ -61,9 +61,9 @@ Authors
 
 Publications
 -GET
-    -to get all publication
-    -to get specific publication
-    -to list of publication based on a book
+    -to get all publication         
+    -to get specific publication         
+    -to list of publication based on a book      ----------do
 
 -POST
     -to add new publication
