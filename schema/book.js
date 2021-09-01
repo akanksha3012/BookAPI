@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-//create a book schema
+const mongoose = require("mongoose");
+
+//Create a book schema
 const BookSchema = mongoose.Schema({
-    ISBN:{
+    ISBN: {
         type: String,
         required: true,
     },
-
     title: {
         type: String,
         required: true,
@@ -14,7 +14,7 @@ const BookSchema = mongoose.Schema({
     language: String,
     pubDate: String,
     numOfPage: Number,
-    Category:[String],
+    category: [String],
     publication: Number,
 });
 

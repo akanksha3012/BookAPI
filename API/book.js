@@ -1,6 +1,7 @@
+const Router = require('express').Router();
 const BookModel = require('../schema/book');
 const AuthorModel = require('../schema/author');
-const Router = require('express').Router();
+
 
 //Route         -- /book
 //Description   -- to get all books
@@ -8,7 +9,7 @@ const Router = require('express').Router();
 //Method        -- GET
 //Params        -- none
 //Body          -- none
-Router.get("/book", async (req, res) => {
+Router.get("", async (req, res) => {
     // we use asycn as the Book.ind may take time
     const getAllBooks = await BookModel.find();
     return res.json(getAllBooks);
@@ -20,7 +21,7 @@ Router.get("/book", async (req, res) => {
 //Method        -- GET
 //Params        -- bookID
 //Body          -- none
-Router.get("/book/:bookID", async(req, res) => {
+Router.get("/:bookID", async(req, res) => {
     const getSpecificBook = await BookModel.findOne({ISBN: req.params.bookID});
     if(!getSpecificBook){
         return res.json({
@@ -36,7 +37,7 @@ Router.get("/book/:bookID", async(req, res) => {
 //Method        -- GET
 //Params        -- category
 //Body          -- none
-Router.get("/book/c/:category", async(req, res) => {
+Router.get("/c/:category", async(req, res) => {
     const getSpecificBooks = await BookModel.find({category: req.params.category});
     if(!getSpecificBooks){
         return res.json({error: `no books found for the category of ${req.params.category}`});
@@ -50,7 +51,7 @@ Router.get("/book/c/:category", async(req, res) => {
 //Method        -- GET
 //Params        -- author
 //Body          -- none
- Router.get("/book/a/:Author", async(req, res) => {
+ Router.get("/a/:Author", async(req, res) => {
      const getBook = await BookModel.find({authors: req.params.Author});
      if(!getBooks){
         return res.json({error: `no books found for the author of id ${req.params.Author}`});
@@ -64,7 +65,7 @@ Router.get("/book/c/:category", async(req, res) => {
 //Method        -- POST
 //Params        -- none
 //Body          -- yes
-Router.post("/book/new", async (req, res) => {
+Router.post("/new", async (req, res) => {
     try{
         const { newBook } = req.body;
         
@@ -82,7 +83,7 @@ Router.post("/book/new", async (req, res) => {
 //Access        -- public
 //Method        -- PUT
 //Params        -- ISBN
-Router.put("/book/updateTitle/:isbn", async (req,res) => {
+Router.put("/updateTitle/:isbn", async (req,res) => {
     const {title} = req.body.title;
     const updateBook = await BookModel.findOne(
         {
@@ -104,7 +105,7 @@ Router.put("/book/updateTitle/:isbn", async (req,res) => {
   //Access        -- public
   //Method        -- PUT
   //Params        -- ISBN
-  Router.put('/book/updateAuthor/:isbn', async(req,res) =>{
+  Router.put('/updateAuthor/:isbn', async(req,res) =>{
    const {newAuthor} = req.body;
    const {isbn} = req.params;
    const updateBook = await BookModel.findOneAndUpdate(
@@ -141,7 +142,7 @@ Router.put("/book/updateTitle/:isbn", async (req,res) => {
 //Access        -- public
 //Method        -- DELETE
 //Params        -- isbn
-Router.delete('/book/delete/:isbn', async(req,res) => {
+Router.delete('/delete/:isbn', async(req,res) => {
     const {isbn} = req.params;
     const updateBookDatabase = await BookModel.findOneAndDelete({
     ISBN: isbn
@@ -154,7 +155,7 @@ Router.delete('/book/delete/:isbn', async(req,res) => {
  //Access        -- public
  //Method        -- DELETE
  //Params        -- id, isbn
- Router.delete('/book/delete/author/:isbn/:id', async(req,res) => {
+ Router.delete('/delete/author/:isbn/:id', async(req,res) => {
      const {isbn, id} = req.params;
      //updating database object
      const updatedBook = await BookModel.findOneAndUpdate({

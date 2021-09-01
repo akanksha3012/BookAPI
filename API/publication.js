@@ -1,6 +1,7 @@
+const Router = require('express').Router();
 const PublicationModel = require('../schema/publication');
 const BookModel = require('../schema/book');
-const Router = require('express').Router();
+
 
 //Route         -- /publication
 //Description   -- to get all publications
@@ -8,7 +9,7 @@ const Router = require('express').Router();
 //Method        -- GET
 //Params        -- none
 //Body          -- none
-Router.get("/publication", async (req, res) => {
+Router.get("", async (req, res) => {
     const getAllPublications = await PublicationModel.find();
     return res.json(getAllPublications);
 });
@@ -18,7 +19,7 @@ Router.get("/publication", async (req, res) => {
 //Method        -- GET
 //Params        -- publicationID
 //Body          -- none
-Router.get("/publication/:publicationID", async (req, res) => {
+Router.get("/:publicationID", async (req, res) => {
     const getSpecificPublication = await PublicationModel.findOne({id: req.params.publicationID});
     if(!getSpecificPublication){
         return res.json({
@@ -34,10 +35,10 @@ Router.get("/publication/:publicationID", async (req, res) => {
 //Method        -- POST
 //Params        -- none
 //Body          -- yes
-Router.post("/publication/new", (req,res)=>{
+Router.post("/new", async (req,res)=>{
     
     const {newPublication} = req.body;
-    console.log(newPublication);
+    await PublicationModel.create(newPublication);
     return res.json({message: 'Publication added successfully'});
 });
 //------------------------------------------------------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Router.post("/publication/new", (req,res)=>{
 //Access        -- public
 //Method        -- DELETE
 //Params        -- id
-Router.delete('/publication/delete/:id', async (req,res) =>{
+Router.delete('/delete/:id', async (req,res) =>{
     const {id} = req.params;
     const updatePublicationDatabase = await PublicationModel.findOneAndDelete({
         id: parseInt(id)
@@ -59,7 +60,7 @@ Router.delete('/publication/delete/:id', async (req,res) =>{
 //Access        -- public
 //Method        -- DELETE
 //Params        -- id, isbn
-Router.delete('/publication/delete/book/:isbn/:id', async(req,res) =>{
+Router.delete('/delete/book/:isbn/:id', async(req,res) =>{
     const {isbn, id} = req.params;
     //updating database object
     const updatedBook = await BookModel.findOneAndUpdate({

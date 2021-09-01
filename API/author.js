@@ -1,6 +1,5 @@
-
-const AuthorModel = require('../schema/author');
 const Router = require('express').Router();
+const AuthorModel = require('../schema/author');
 
 //Route         -- /author
 //Description   -- to get list of all authors
@@ -8,7 +7,7 @@ const Router = require('express').Router();
 //Method        -- GET
 //Params        -- none
 //Body          -- none
-Router.get("/author", async(req, res) => {
+Router.get("", async(req, res) => {
     const getAllAuthors = await AuthorModel.find();
     return res.json(getAllAuthors);
 });
@@ -18,7 +17,7 @@ Router.get("/author", async(req, res) => {
 //Method        -- GET
 //Params        -- author id
 //Body          -- none
-Router.get("/author/:authorID", async(req, res) => {
+Router.get("/:authorID", async(req, res) => {
     const getSpecificAuthor = await AuthorModel.findOne({id: req.params.authorID});
     if(!getSpecificAuthor){
         return res.json({
@@ -34,11 +33,11 @@ Router.get("/author/:authorID", async(req, res) => {
 //Method        -- POST
 //Params        -- none
 //Body          -- yes
-Router.post("/author/new", (req,res)=>{
+Router.post("/new", (req,res)=>{
     //destructuring of data
     //nested object
     const {newAuthor} = req.body;
-    Author.create(newAuthor);
+    AuthorModel.create(newAuthor);
     return res.json({message: 'author added successfully'});
 });
 //------------------------------------------------------------------------------------------------------------------------
@@ -48,7 +47,7 @@ Router.post("/author/new", (req,res)=>{
 //Method        -- PUT
 //Params        -- id
 //params in the req.body are always in string format
-Router.put('/author/updateName/:id', async(req, res) => {
+Router.put('/updateName/:id', async(req, res) => {
     const { name } = req.body.name;
     const updateAuthor = await AuthorModel.findOne(
         {
@@ -70,7 +69,7 @@ Router.put('/author/updateName/:id', async(req, res) => {
 //Access        -- public
 //Method        -- DELETE
 //Params        -- id
-Router.delete('/author/delete/:id',async(req,res) => {
+Router.delete('/delete/:id',async(req,res) => {
     const {id} = req.params;
     const updateAuthorDatabase = await AuthorModel.findOneAndDelete({
         id: parseInt(id)
@@ -80,3 +79,4 @@ Router.delete('/author/delete/:id',async(req,res) => {
 });
 
 module.exports = Router;
+
